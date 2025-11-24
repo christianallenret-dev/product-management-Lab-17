@@ -3,6 +3,16 @@
 $title = 'Products';
 include 'functions/products.php';
 
+if(isset($_POST['delete'])){
+  $pcode = $_POST['pcode'];
+  if(deleteProduct($pcode)){
+    $_SESSION['action']='delete';
+    $_SESSION['msg']='Product deleted successfully!';
+    header('location:products.php'); //refresh to preven re-submit
+    exit;
+  }
+}
+
 if(isset($_POST['search'])){
   $search = $_POST['txtsearch'];
   $products = findProducts($search);
@@ -66,7 +76,7 @@ if(isset($_POST['search'])){
           </thead>
           <tbody>
             <?php
-            $s = 0;
+            $i = 0;
               foreach($products as $product) {
                 $i += 1;
             ?>
@@ -81,9 +91,12 @@ if(isset($_POST['search'])){
                   <label class="btn btn-primary btn-sm">
                     <a href="" class="text-white"><i class="fas fa-pen"></i></a>
                   </label>
-                  <label class="btn btn-danger btn-sm">
-                    <a href="" class="text-white"><i class="fas fa-trash"></i></a>
-                  </label>
+                  <form method="post">
+                    <input type="hidden" name="pcode" value="<?=$product['p_code']?>">
+                    <button class="btn btn-danger btn-sm" name="delete">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
                 </div>
               </td>
             </tr>
