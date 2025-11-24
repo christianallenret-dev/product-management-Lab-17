@@ -1,6 +1,14 @@
 <?php
 
 $title = 'Products';
+include 'functions/products.php';
+
+if(isset($_POST['search'])){
+  $search = $_POST['txtsearch'];
+  $products = findProducts($search);
+}else{
+  $products = getAllProducts();
+}
 ?>
 
 <!doctype html>
@@ -28,6 +36,20 @@ $title = 'Products';
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1 class="h2">Manage Products</h1>        
       </div>
+      <form method="post">
+      <div class="row">
+        <div class="col-6">
+            <div class="col6">              
+              <label for="stocks">Search</label>
+              <input type="text" class="form-control " name="txtsearch">
+            </div> 
+            <div class="col-6">           
+              <input type="submit" name="search" value="Search" class="btn btn-primary">
+            </div>            
+        </div>
+      </div>
+        
+      </form>
       <a href="product-form.html" class="btn btn-success text-white mb-3 float-right"><i class="fas fa-plus-square"></i> New Product</a>
       
       <div class="table-responsive">
@@ -42,13 +64,11 @@ $title = 'Products';
               <th>Actions</th>
             </tr>
           </thead>
-          <?php
-            include 'functions/products.php';
-            $products = getAllProducts();
-          ?>
           <tbody>
             <?php
+            $s = 0;
               foreach($products as $product) {
+                $i += 1;
             ?>
             <tr>
               <td>1</td>
