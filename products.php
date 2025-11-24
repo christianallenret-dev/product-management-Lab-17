@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $title = 'Products';
 include 'functions/products.php';
 
@@ -60,8 +60,17 @@ if(isset($_POST['search'])){
       </div>
         
       </form>
-      <a href="product-form.html" class="btn btn-success text-white mb-3 float-right"><i class="fas fa-plus-square"></i> New Product</a>
-      
+      <a href="product-form.php" class="btn btn-success text-white mb-3 float-right"><i class="fas fa-plus-square"></i> New Product</a>
+      <?php
+       if(isset($_SESSION['action'])){
+      ?>
+      <div class="alert alert-success mt-3 col-6">
+        <?=$_SESSION['msg']?>
+      </div>
+      <?php
+        unset($_SESSION['action']);
+       }
+      ?>
       <div class="table-responsive">
         <table class="table table-striped table-sm">
           <thead>
@@ -81,11 +90,11 @@ if(isset($_POST['search'])){
                 $i += 1;
             ?>
             <tr>
-              <td>1</td>
+              <td><?=$i?></td>
               <td><?=$product['p_code']?></td>
               <td><?=$product['p_descript']?></td>
               <td><?=$product['p_price']?></td>
-              <td>200</td>
+              <td><?=$product['p_qoh']?></td>
               <td >
                 <div class="btn-group btn-group-toggle" data-toggle="buttons">                  
                   <label class="btn btn-primary btn-sm">

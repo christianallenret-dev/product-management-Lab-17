@@ -39,3 +39,17 @@ function deleteProduct($pcode){
     return false;
 }
 
+function addProduct($pcode, $desc, $price, $stocks){
+    $conn = Connect();
+
+    $query = "INSERT INTO product
+                (p_code, p_descript, p_qoh, p_price, v_code)
+                VALUES
+                ('$pcode','$desc', $stocks, $price, 24288)";
+    $result = $conn->query($query); 
+    $conn->close();
+    if($result) return true; 
+    
+    return false;
+}
+
